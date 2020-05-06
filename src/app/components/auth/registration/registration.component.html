@@ -1,18 +1,51 @@
 <form [formGroup]="registrationForm">
-  <div class="container mt-4 col-4">
-      <div class="form-group">
-          <label for="title">Ime</label>
-          <input id="title" type="text" class="form-control" formControlName="firstName">
-      </div>
-      <div class="form-group">
-        <label for="title">Prezime</label>
-        <input id="title" type="text" class="form-control" formControlName="lastName">
+  <div class="container mt-5 col-4 bg-light text-dark">
+    <div>
+      <h3>Registruj se</h3>
     </div>
     <div class="form-group">
-      <label for="title">Password</label>
-      <input id="title" type="text" class="form-control" formControlName="password">
-  </div>
+      <label for="email">Email adresa</label>
+      <input id="email" type="text" class="form-control" formControlName="email">
+    </div>
+    <div class="form-group">
+      <label for="username">Korisničko ime</label>
+      <input id="username" type="text" class="form-control" formControlName="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" class="form-control" formControlName="password">
+    </div>
+    <div class="form-group">
+      <div class="custom-control custom-radio">
+        <input type="radio" id="musko" name="customRadio" class="custom-control-input" value="male" checked
+          (click)="selectGender($event)">
+        <label class="custom-control-label" for="musko">Muško</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" id="zensko" name="customRadio" class="custom-control-input" value="female"
+          (click)="selectGender($event)">
+        <label class="custom-control-label" for="zensko">Žensko</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Kontakt telefon</label>
+      <input type="text" id="phone" class="form-control" formControlName="phone">
+    </div>
+    <div class="form-group">
+      <label for="location">Lokacija</label>
+      <ng-autocomplete formControlName="location" [data]="locations" [searchKeyword]="keyword"
+        (selected)='selectLocation($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+        [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+      </ng-autocomplete>
 
-      <button class="btn btn-success center">Prijavi</button>
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item.text"></a>
+      </ng-template>
+
+      <ng-template #notFoundTemplate let-notFound>
+        <div [innerHTML]="notFound"></div>
+      </ng-template>
+    </div>
+    <button class="btn btn-success center mb-4" (click)="register()">Prijavi se</button>
   </div>
 </form>
